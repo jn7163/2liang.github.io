@@ -1,0 +1,948 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="安全," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="茅坡村的程序狗" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="从群里看到的，有大牛发了一个连接，点击进去看了看，是个黑客游戏，一直很喜欢这种玩意，所以就尝试这去玩玩，第一阶段过了，但是第二阶段还没开始做。
+游戏链接：http://www.fj543.com/hack/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次黑客丛林之旅--题解">
+<meta property="og:url" content="http://yoursite.com/2014/05/15/hacker-note/index.html">
+<meta property="og:site_name" content="茅坡村的程序狗">
+<meta property="og:description" content="从群里看到的，有大牛发了一个连接，点击进去看了看，是个黑客游戏，一直很喜欢这种玩意，所以就尝试这去玩玩，第一阶段过了，但是第二阶段还没开始做。
+游戏链接：http://www.fj543.com/hack/">
+<meta property="og:updated_time" content="2016-11-09T13:44:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次黑客丛林之旅--题解">
+<meta name="twitter:description" content="从群里看到的，有大牛发了一个连接，点击进去看了看，是个黑客游戏，一直很喜欢这种玩意，所以就尝试这去玩玩，第一阶段过了，但是第二阶段还没开始做。
+游戏链接：http://www.fj543.com/hack/">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 3429605,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 记一次黑客丛林之旅--题解 | 茅坡村的程序狗 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s6.cnzz.com/stat.php?id=1256069982&web_id=1256069982" type="text/javascript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">茅坡村的程序狗</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                记一次黑客丛林之旅--题解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-05-15T22:19:14+08:00" content="2014-05-15">
+              2014-05-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/爱撸码/" itemprop="url" rel="index">
+                    <span itemprop="name">爱撸码</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/05/15/hacker-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/15/hacker-note/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+         
+          
+          &nbsp; | &nbsp;
+          <span id="/2014/05/15/hacker-note/"class="leancloud_visitors" data-flag-title="记一次黑客丛林之旅--题解">
+             &nbsp;阅读次数
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从群里看到的，有大牛发了一个连接，点击进去看了看，是个黑客游戏，一直很喜欢这种玩意，所以就尝试这去玩玩，第一阶段过了，但是第二阶段还没开始做。</p>
+<address>游戏链接：<a href="http://www.fj543.com/hack/" target="_blank" rel="external">http://www.fj543.com/hack/</a></address>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h3><h3 id="第一关："><a href="#第一关：" class="headerlink" title="第一关："></a>第一关：</h3><h4 id="提示语：仅在浏览器端用脚本进行身份验证是不安全的。-The-Client-side-authentication-is-not-secure"><a href="#提示语：仅在浏览器端用脚本进行身份验证是不安全的。-The-Client-side-authentication-is-not-secure" class="headerlink" title="提示语：仅在浏览器端用脚本进行身份验证是不安全的。(The Client-side authentication is not secure)"></a>提示语：仅在浏览器端用脚本进行身份验证是不安全的。(The Client-side authentication is not secure)</h4><p>基本可以推测到，这个页面应该是用JS来验证密码是否正确的，戳进源代码发现：</p>
+<p><pre class="lang:js decode:true">&lt;script type=”text/javascript”&gt;<br>function gogogo(){<br>    var pwd=document.getElementById(“pass”).value;<br>    if (pwd==”go54321”) {alert(“OK,过关了！”);<br>            window.location=”./?level=222”;<br>        } else {<br>            alert(“Error:密码错误！”);<br>            document.getElementById(“pass”).focus();<br>        }<br>}<br>&lt;/script&gt;</pre><br>从这段JS代码中可以看到，当pwd表单值为go54321即可过关，那直接输入密码：go54321</p>
+<h2 id="第二题："><a href="#第二题：" class="headerlink" title="第二题："></a>第二题：</h2><h4 id="提示语：这讨厌的脚本，为什么阻止我！-I-hate-the-script-it-prevents-me"><a href="#提示语：这讨厌的脚本，为什么阻止我！-I-hate-the-script-it-prevents-me" class="headerlink" title="提示语：这讨厌的脚本，为什么阻止我！(I hate the script,it prevents me)"></a>提示语：这讨厌的脚本，为什么阻止我！(I hate the script,it prevents me)</h4><p>通过看提示语知道这个题应该也是JS脚本的问题，而且当你在密码框中不输入值时，为提示你密码框不能为空，当你输入值时，又提示你框中不能填写东西，所以判断应该是用JS脚本来判断了表单数据。直接将浏览器的JS脚本禁用，然后点击GO，直接跳转到第三关。</p>
+<h2 id="第三题："><a href="#第三题：" class="headerlink" title="第三题："></a>第三题：</h2><h4 id="您还没有登录，所以看不到本页的秘密。-You-must-login-to-see-the-secret-of-this-level"><a href="#您还没有登录，所以看不到本页的秘密。-You-must-login-to-see-the-secret-of-this-level" class="headerlink" title="您还没有登录，所以看不到本页的秘密。(You must login to see the secret of this level)"></a>您还没有登录，所以看不到本页的秘密。(You must login to see the secret of this level)</h4><h4 id="提示语：这该死的网页，凭什么说我没有登录？-Damn-page-Why-you-say-that-I-didn’t-login"><a href="#提示语：这该死的网页，凭什么说我没有登录？-Damn-page-Why-you-say-that-I-didn’t-login" class="headerlink" title="提示语：这该死的网页，凭什么说我没有登录？(Damn page! Why you say that I didn’t login?)"></a>提示语：这该死的网页，凭什么说我没有登录？(Damn page! Why you say that I didn’t login?)</h4><h4 id="New-Way："><a href="#New-Way：" class="headerlink" title="New Way："></a>New Way：</h4><p>我知道管理员很懒，密码应该很简单。可是他懒到连登录界面都没做……</p>
+<p>一开始看到这个题，我很习惯的想到是不是新建个COOKIE值就行了，然后就打开了COOKIE Manage，刚好看到有个名称为login的cookie，而且他的值是no，我就很欣喜，哈哈，肯定是将no改为yes就可以了，很潇洒的改过cookie，然后刷新页面，等待着进入第四题，可是，悲剧了，页面还是停在那里，我还以为是我的插件有问题，然后就更换各种方法修改cookie，最终依然是不可以。</p>
+<p>无奈后，请教大牛，经过大牛点拨，才发现其实也很简单，为何我没有想到呢。</p>
+<p>提示上面有说管理员懒到连登陆页面都没做，再知一般登陆都是用POST提交，直接用firfox插件POST提交一个password，页面跳转，给了去第四题的链接。</p>
+<p>为何我就木有想到呢？</p>
+<h2 id="第四题："><a href="#第四题：" class="headerlink" title="第四题："></a>第四题：</h2><p>看到题上那出现好多的点和横杠，很明显莫尔斯电码，直接百度莫尔斯电码，对照着找出每个对应的字符，最终解出：IAMOK</p>
+<h2 id="第五题："><a href="#第五题：" class="headerlink" title="第五题："></a>第五题：</h2><h4 id="提示语：用流行的加密算法把密码加密成e40756427fac3320或YmFzZTY0aXNvaw-的形式并不可靠。"><a href="#提示语：用流行的加密算法把密码加密成e40756427fac3320或YmFzZTY0aXNvaw-的形式并不可靠。" class="headerlink" title="提示语：用流行的加密算法把密码加密成e40756427fac3320或YmFzZTY0aXNvaw==的形式并不可靠。"></a>提示语：用流行的加密算法把密码加密成e40756427fac3320或YmFzZTY0aXNvaw==的形式并不可靠。</h4><p>看到上面的提示语一看第一种加密MD5，第二种加密Base64，很明显Base64比较好解密，百度Base64解密，随便找个工具，就可以解出。最终密码：base64isok</p>
+<h2 id="第六题："><a href="#第六题：" class="headerlink" title="第六题："></a>第六题：</h2><h4 id="if-mstsc-vnc-9290-then-password-MSSQL-MySQL-Oracle"><a href="#if-mstsc-vnc-9290-then-password-MSSQL-MySQL-Oracle" class="headerlink" title="if mstsc+vnc=9290 then password=MSSQL+MySQL+Oracle"></a>if mstsc+vnc=9290 then password=MSSQL+MySQL+Oracle</h4><p>看到这句代码，一开始看不懂什么意思，看到他在一起相加成了数字，在看着后面的密码是由三种数据库加起来的，没头绪，就百度了下vnc是什么东西，百度后发现是远程控制软件，在看到mstsc应该是远程桌面连接，记得不清楚了，百度了下果然是，然后想到是不是端口号加在一块，然后就查了下这两种服务的端口号:3306+5901=9290。刚刚好，于是查了下三种数据库的默认端口，加在一块，可得密码：1433+3306+1521=6260。</p>
+<h2 id="第七题："><a href="#第七题：" class="headerlink" title="第七题："></a>第七题：</h2><p>题上给了一个GIF图片，肉眼毛也看不出来，因为只给了一张图，想着肯定是图上有什么家伙，因为是GIF图，直接下载下来，扔到PS中去，逐帧看图，发现有三个大写的单词，以及三个小写的词，通过逐帧查看，发现说的是忽略大写字母，那直接将三个小写的词放上去，即可。</p>
+<h2 id="第八题："><a href="#第八题：" class="headerlink" title="第八题："></a>第八题：</h2><h4 id="吴世昌的弟弟的网名是什么？-What’s-the-username-of-WuShichang’s-little-brother"><a href="#吴世昌的弟弟的网名是什么？-What’s-the-username-of-WuShichang’s-little-brother" class="headerlink" title="吴世昌的弟弟的网名是什么？(What’s the username of WuShichang’s little brother)"></a>吴世昌的弟弟的网名是什么？(What’s the username of WuShichang’s little brother)</h4><h4 id="提示语：小小社工，过这一关主要靠人脑，电脑只是辅助。"><a href="#提示语：小小社工，过这一关主要靠人脑，电脑只是辅助。" class="headerlink" title="提示语：小小社工，过这一关主要靠人脑，电脑只是辅助。"></a>提示语：小小社工，过这一关主要靠人脑，电脑只是辅助。</h4><p>题目在问吴世昌的弟弟的网名，一看就知道是社工方面的问题，因为之前看了下这个官网，官网上面介绍了，站长就是吴世昌，他说了他的弟弟叫吴其昌。通过提示，主要靠人脑，就得想想了，肯定不是直接从网上找到他的网名，然后发现站长吴世昌的网名是fj543，后面的543感觉是名字的谐音，然后吴其昌就可以试试573，组合后就是fj573，输入试试，果然不出所料，成功。密码：fj573</p>
+<h2 id="第九题："><a href="#第九题：" class="headerlink" title="第九题："></a>第九题：</h2><h4 id="提示语：使用IE-5-43版本的浏览器访问-level-9token可以得到令牌。"><a href="#提示语：使用IE-5-43版本的浏览器访问-level-9token可以得到令牌。" class="headerlink" title="提示语：使用IE 5.43版本的浏览器访问?level=9token可以得到令牌。"></a>提示语：使用IE 5.43版本的浏览器访问?level=9token可以得到令牌。</h4><p>从提示上看到说是用IE 5.43版本的浏览器访问指定网页就可以得到令牌了，那就直接修改UserAgent，从网上各种找，想着找找IE 5.43浏览器的UserAgent，可是找了好多找不到，最后就直接根据其他版本的IE浏览器构造，可是无论怎么搞都不行，后来请教大牛，大牛说UserAgent直接修改成IE 5.43即可，可是我用浏览器插件修改成IE 5.43还是不行，用Burp，竟然出故障了，浏览器链接不到Burp的代理，就用了下Fillder，但是还是不行，最后实在不行，直接用了大牛的令牌来到第十题了。</p>
+<h2 id="第十题："><a href="#第十题：" class="headerlink" title="第十题："></a>第十题：</h2><p>这个题给了一个压缩包，加密的，大牛给了我密码，我也具体没看密码怎么来的，因为我现在没法从第九题到第十题的链接，没办法。压缩包里面有一个EXE文件，直接运行，生成了一个txt文件，可是无论如何也打不开该文件，用Hxd也打不开，反正是什么操作都不能用。大牛说这应该是由两个txt文件合并起来的，需要用\.\才能打开，但是试了好久不行，最后大牛说前面要加个type命令，然后加上\.\文件路径，回车，token就出现了。</p>
+<p>其实不知道第十题的命令到底是什么情况，明天好好问问大牛。</p>
+<p>type命令：<a href="http://blog.csdn.net/hudashi/article/details/7066190" target="_blank" rel="external">http://blog.csdn.net/hudashi/article/details/7066190</a></p>
+<p>至此，第一阶段完成了，以为这就完了，谁知道下面还有下一关，才知道这是第一阶段，下一阶段还没搞呢，改天玩玩。</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/安全/" rel="tag">#安全</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/05/11/sae-cron/" rel="next" title="SAE开发中使用计划任务Cron">
+                <i class="fa fa-chevron-left"></i> SAE开发中使用计划任务Cron
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/06/09/thinkphp-shortcut-method/" rel="prev" title="ThinkPHP快捷方法总结">
+                ThinkPHP快捷方法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/05/15/hacker-note/"
+           data-title="记一次黑客丛林之旅--题解" data-url="http://yoursite.com/2014/05/15/hacker-note/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xkyde.com1.z0.glb.clouddn.com/img.png"
+               alt="我才是二亮" />
+          <p class="site-author-name" itemprop="name">我才是二亮</p>
+          <p class="site-description motion-element" itemprop="description">茅坡村蹿出的程序狗，爱撸码，爱读书。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/unstring" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 微博
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/102437430/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/2liang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title"></div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://poach.cc/" target="_blank">梁栋的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://t1mer.me/" target="_blank">t1mer's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.esu.im/" target="_blank">Kuuki's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyrils.org/" target="_blank">Cyrils's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wsescape.com/" target="_blank">Escape's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一关："><span class="nav-number">2.</span> <span class="nav-text">第一关：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提示语：仅在浏览器端用脚本进行身份验证是不安全的。-The-Client-side-authentication-is-not-secure"><span class="nav-number">2.1.</span> <span class="nav-text">提示语：仅在浏览器端用脚本进行身份验证是不安全的。(The Client-side authentication is not secure)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二题："><span class="nav-number"></span> <span class="nav-text">第二题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提示语：这讨厌的脚本，为什么阻止我！-I-hate-the-script-it-prevents-me"><span class="nav-number">0.1.</span> <span class="nav-text">提示语：这讨厌的脚本，为什么阻止我！(I hate the script,it prevents me)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三题："><span class="nav-number"></span> <span class="nav-text">第三题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#您还没有登录，所以看不到本页的秘密。-You-must-login-to-see-the-secret-of-this-level"><span class="nav-number">0.1.</span> <span class="nav-text">您还没有登录，所以看不到本页的秘密。(You must login to see the secret of this level)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提示语：这该死的网页，凭什么说我没有登录？-Damn-page-Why-you-say-that-I-didn’t-login"><span class="nav-number">0.2.</span> <span class="nav-text">提示语：这该死的网页，凭什么说我没有登录？(Damn page! Why you say that I didn’t login?)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#New-Way："><span class="nav-number">0.3.</span> <span class="nav-text">New Way：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四题："><span class="nav-number"></span> <span class="nav-text">第四题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五题："><span class="nav-number"></span> <span class="nav-text">第五题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提示语：用流行的加密算法把密码加密成e40756427fac3320或YmFzZTY0aXNvaw-的形式并不可靠。"><span class="nav-number">0.1.</span> <span class="nav-text">提示语：用流行的加密算法把密码加密成e40756427fac3320或YmFzZTY0aXNvaw==的形式并不可靠。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六题："><span class="nav-number"></span> <span class="nav-text">第六题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#if-mstsc-vnc-9290-then-password-MSSQL-MySQL-Oracle"><span class="nav-number">0.1.</span> <span class="nav-text">if mstsc+vnc=9290 then password=MSSQL+MySQL+Oracle</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七题："><span class="nav-number"></span> <span class="nav-text">第七题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第八题："><span class="nav-number"></span> <span class="nav-text">第八题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#吴世昌的弟弟的网名是什么？-What’s-the-username-of-WuShichang’s-little-brother"><span class="nav-number">0.1.</span> <span class="nav-text">吴世昌的弟弟的网名是什么？(What’s the username of WuShichang’s little brother)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提示语：小小社工，过这一关主要靠人脑，电脑只是辅助。"><span class="nav-number">0.2.</span> <span class="nav-text">提示语：小小社工，过这一关主要靠人脑，电脑只是辅助。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第九题："><span class="nav-number"></span> <span class="nav-text">第九题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#提示语：使用IE-5-43版本的浏览器访问-level-9token可以得到令牌。"><span class="nav-number">0.1.</span> <span class="nav-text">提示语：使用IE 5.43版本的浏览器访问?level=9token可以得到令牌。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十题："><span class="nav-number"></span> <span class="nav-text">第十题：</span></a></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">我才是二亮</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div><br>
+
+<div class="view" style="margin-left: 260px;">
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span> 
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"2liang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+    <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("GUmazrXSU5LNyVXhXXlliccO-gzGzoHsz", "mo9dVl6hs73TalGEYwoLzeQM");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

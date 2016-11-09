@@ -1,0 +1,984 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PHP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="茅坡村的程序狗" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="使用豆瓣帐号登录
+“用豆瓣账号登录”允许访问你网站的用户使用豆瓣账号登录。
+你的网站使用此功能后，可以让用户无需注册流程直接登录，降低使用门槛，让你的网站轻松获得新用户，提升用户登录率。
+&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="豆瓣API之【使用豆瓣账号登陆】">
+<meta property="og:url" content="http://yoursite.com/2014/10/21/douban-api-login/index.html">
+<meta property="og:site_name" content="茅坡村的程序狗">
+<meta property="og:description" content="使用豆瓣帐号登录
+“用豆瓣账号登录”允许访问你网站的用户使用豆瓣账号登录。
+你的网站使用此功能后，可以让用户无需注册流程直接登录，降低使用门槛，让你的网站轻松获得新用户，提升用户登录率。
+&amp;nbsp;">
+<meta property="og:updated_time" content="2016-11-09T13:44:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="豆瓣API之【使用豆瓣账号登陆】">
+<meta name="twitter:description" content="使用豆瓣帐号登录
+“用豆瓣账号登录”允许访问你网站的用户使用豆瓣账号登录。
+你的网站使用此功能后，可以让用户无需注册流程直接登录，降低使用门槛，让你的网站轻松获得新用户，提升用户登录率。
+&amp;nbsp;">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 3429605,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 豆瓣API之【使用豆瓣账号登陆】 | 茅坡村的程序狗 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s6.cnzz.com/stat.php?id=1256069982&web_id=1256069982" type="text/javascript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">茅坡村的程序狗</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                豆瓣API之【使用豆瓣账号登陆】
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-10-21T21:55:43+08:00" content="2014-10-21">
+              2014-10-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/爱撸码/" itemprop="url" rel="index">
+                    <span itemprop="name">爱撸码</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/10/21/douban-api-login/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/21/douban-api-login/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+         
+          
+          &nbsp; | &nbsp;
+          <span id="/2014/10/21/douban-api-login/"class="leancloud_visitors" data-flag-title="豆瓣API之【使用豆瓣账号登陆】">
+             &nbsp;阅读次数
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="使用豆瓣帐号登录"><a href="#使用豆瓣帐号登录" class="headerlink" title="使用豆瓣帐号登录"></a>使用豆瓣帐号登录</h1><blockquote>
+<p>“用豆瓣账号登录”允许访问你网站的用户使用豆瓣账号登录。</p>
+<p>你的网站使用此功能后，可以让用户无需注册流程直接登录，降低使用门槛，让你的网站轻松获得新用户，提升用户登录率。</p>
+<p>&nbsp;</p>
+<a id="more"></a>
+<p><a href="http://developers.douban.com/wiki/?title=connect" title="豆瓣API文档" target="_blank" rel="external">点击戳进官方文档</a></p>
+</blockquote>
+<h2 id="登录流程"><a href="#登录流程" class="headerlink" title="登录流程"></a>登录流程</h2><h3 id="第一步：申请应用"><a href="#第一步：申请应用" class="headerlink" title="第一步：申请应用"></a>第一步：申请应用</h3><p>在申请应用时，有一项【回调地址】需要说明一下，让用户使用第三方账号登陆的原理是：通过授权，获取到用户的个人信息，将获取到的信息存储到数据库中即可。所以，回调地址就是处理你获取到的数据的。</p>
+<p>申请成功后，一定要记得添加测试用户，至于怎么添加，申请应用后，你就知道了；还有就是要申请API权；最后提交审核即可。</p>
+<p>当申请应用成功后，官方会给我们两个值：</p>
+<ul>
+<li>API Key：064611c<strong><strong><strong>*</strong></strong></strong>6b80c1319a</li>
+<li>Secret：51d18<strong>**</strong>2a219</li>
+</ul>
+<h3 id="第二步：获取authorization-code"><a href="#第二步：获取authorization-code" class="headerlink" title="第二步：获取authorization_code"></a>第二步：获取authorization_code</h3><p>因为获取authorization_code使用GET方式提交，所以只需要直接访问即可。</p>
+<p>用户点击“用豆瓣账号登陆”按钮，弹出授权页面代码：</p>
+<p><pre class="lang:default decode:true">&lt;a href=”<a href="https://www.douban.com/service/auth2/auth?client_id=064611c*************6b80c1319a&amp;redirect_uri=http://****.sinaapp.com/login.php&amp;response_type=code&amp;scope=douban_basic_common,book_basic_r,book_basic_w&quot;&gt;&lt;img" target="_blank" rel="external">https://www.douban.com/service/auth2/auth?client_id=064611c*************6b80c1319a&amp;redirect_uri=http://****.sinaapp.com/login.php&amp;response_type=code&amp;scope=douban_basic_common,book_basic_r,book_basic_w&quot;&gt;&lt;img</a> src=”./images/douban.png”  alt=”登陆”&gt;&lt;/a&gt;</pre><br>问题主要在于构造授权地址，</p>
+<p>参数：</p>
+<p><table></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td>参数名称</td></p>
+<p><td>参数说明</td><br></p>
+<p><tr></tr></p>
+<p><td>client_id</td></p>
+<p><td>必选参数，应用的唯一标识，对应于APIKey</td><br></p>
+<p><tr></tr></p>
+<p><td>redirect_uri</td></p>
+<p><td>必选参数，用户授权完成后的回调地址，应用需要通过此回调地址获得用户的授权结果。此地址必须与在应用注册时填写的回调地址一致。</td><br></p>
+<p><tr></tr></p>
+<p><td>response_type</td></p>
+<p><td>必选参数，此值可以为 code 或者 token 。在本流程中，此值为 code</td><br></p>
+<p><tr></tr></p>
+<p><td>scope</td></p>
+<p><td>可选参数，申请权限的范围，如果不填，则使用缺省的scope。如果申请多个scope，使用逗号分隔。</td><br></p>
+<p><tr></tr></p>
+<p><td>state</td></p>
+<p><td>可选参数，用来维护请求和回调状态的附加字符串，在授权完成回调时会附加此参数，应用可以根据此字符串来判断上下文关系。</td><br><br><br><br>参考即可。</p>
+<p>其中<strong>scope就是你所申请的API权限，具体值可以在API权限申请页面查看。</strong></p>
+<p>如果出现报错，可以在官方文档中查找对应报错原因。</p>
+<p>我在获取authorization_code时，出现了113错误，说是缺少参数，查证后并无缺少参数，最终解决的方法竟然是<strong>将代码改成UTF-8格式</strong></p>
+<p>授权成功后，系统会将authorization_code以<strong>GET方式传递给回调地址，所以只需要在回调地址文件中获取这个GET参数的值即可。</strong></p>
+<h3 id="第三步：获取access-token"><a href="#第三步：获取access-token" class="headerlink" title="第三步：获取access_token"></a>第三步：获取access_token</h3><p>因为获取access_token需要POST请求，所以需要使用到CURL，各种参数跟第二步的基本一致，直接贴上代码：</p>
+<p><pre class="lang:php decode:true">header(“Content-Type: text/html;charset=utf-8”);<br>    $data = array(<br>        ‘client_id’ =&gt; “064611c<strong><strong><strong>*</strong></strong></strong>6b80c1319a”,<br>        ‘client_secret’ =&gt; “51d18<strong>**</strong>2a219”,<br>        ‘redirect_uri’ =&gt; “<a href="http://****5.sinaapp.com/login.php" target="_blank" rel="external">http://****5.sinaapp.com/login.php</a>“,<br>        ‘grant_type’ =&gt; “authorization_code”,<br>        ‘code’ =&gt; $_GET[‘code’],<br>        );<br>    $url = “<a href="https://www.douban.com/service/auth2/token" target="_blank" rel="external">https://www.douban.com/service/auth2/token</a>“;<br>    $ch = curl_init();<br>    curl_setopt($ch, CURLOPT_URL, $url);<br>    curl_setopt($ch, CURLOPT_POST, 1);<br>    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);<br>    curl_setopt($ch, CURLOPT_POSTFIELDS,$data);<br>    $return = curl_exec($ch);<br>curl_close($ch);</pre><br>此时，你就可以获取到一个json数据，如下：</p>
+<pre><code>{
+  &quot;access_token&quot;:&quot;a14af********f6ff4&quot;,
+  &quot;expires_in&quot;:3920,
+  &quot;refresh_token&quot;:&quot;5d633d1************24803ec&quot;,
+  &quot;douban_user_id&quot;:&quot;12****1&quot;
+}
+</code></pre><p>然后你就可以获取到access_token以及授权用户的ID了，然后，我们就可以获取到用户的个人信息，获取代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$result = json_decode($return, ture);</div><div class="line">$token = $result[<span class="string">'access_token'</span>];</div><div class="line">$user = $result[<span class="string">'douban_user_id'</span>];</div><div class="line">$header = <span class="string">"Authorization: Bearer "</span>.$token;</div><div class="line">$ch = curl_init();</div><div class="line">$url = <span class="string">"https://api.douban.com/v2/user/"</span>.$user;</div><div class="line">curl_setopt($ch, CURLOPT_URL, $url);</div><div class="line">curl_setopt($ch, CURLOPT_HEADER, $header);</div><div class="line">curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</div><div class="line">$return = curl_exec($ch);</div><div class="line">curl_close($ch);</div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</div><div class="line">$returna = json_decode($return, ture);</div><div class="line">print_r($returna);</div></pre></td></tr></table></figure></p>
+<p>这样我们就获取到了授权用户的个人信息了，只需要将这些信息存储到数据库即可。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag">#PHP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/07/13/onethink-autovalidate-define-error/" rel="next" title="OneThink自动验证设置之自定义错误代码">
+                <i class="fa fa-chevron-left"></i> OneThink自动验证设置之自定义错误代码
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/10/31/css-tooltip-triangle/" rel="prev" title="使用CSS实现Tooltip静态三角样式">
+                使用CSS实现Tooltip静态三角样式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/10/21/douban-api-login/"
+           data-title="豆瓣API之【使用豆瓣账号登陆】" data-url="http://yoursite.com/2014/10/21/douban-api-login/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xkyde.com1.z0.glb.clouddn.com/img.png"
+               alt="我才是二亮" />
+          <p class="site-author-name" itemprop="name">我才是二亮</p>
+          <p class="site-description motion-element" itemprop="description">茅坡村蹿出的程序狗，爱撸码，爱读书。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/unstring" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 微博
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/102437430/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/2liang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title"></div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://poach.cc/" target="_blank">梁栋的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://t1mer.me/" target="_blank">t1mer's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.esu.im/" target="_blank">Kuuki's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cyrils.org/" target="_blank">Cyrils's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wsescape.com/" target="_blank">Escape's Blog</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用豆瓣帐号登录"><span class="nav-number">1.</span> <span class="nav-text">使用豆瓣帐号登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登录流程"><span class="nav-number">1.1.</span> <span class="nav-text">登录流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：申请应用"><span class="nav-number">1.1.1.</span> <span class="nav-text">第一步：申请应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：获取authorization-code"><span class="nav-number">1.1.2.</span> <span class="nav-text">第二步：获取authorization_code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：获取access-token"><span class="nav-number">1.1.3.</span> <span class="nav-text">第三步：获取access_token</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">我才是二亮</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div><br>
+
+<div class="view" style="margin-left: 260px;">
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span> 
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</div>
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"2liang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+    <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("GUmazrXSU5LNyVXhXXlliccO-gzGzoHsz", "mo9dVl6hs73TalGEYwoLzeQM");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>
