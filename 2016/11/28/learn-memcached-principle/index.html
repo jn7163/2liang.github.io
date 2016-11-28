@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="我才是二亮, PHP开发, 西邮" />
+  <meta name="keywords" content="memcached,NoSql," />
 
 
 
@@ -59,37 +59,40 @@
 
 
 
-<meta name="description" content="title: 学习笔记之Memcached原理date: 2016-11-28 23:33:28tags: 
-
-memcached
-NoSqlcategories: 数据库—## 学习笔记之Memcached原理
-
-0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+<meta name="description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
 0x01 Memcached特性
-基于libeve">
+基于libevent的事件处理
+内置内存存储方式SLab Allocation机制
+并不单一的数据删除机制
+基于客户端的分布式系统
+
+0x02 高性能的基础：libevent事件处理
+Libevent 是一个用C语言编写的、轻量级的开">
 <meta property="og:type" content="article">
-<meta property="og:title" content="茅坡村的程序狗">
+<meta property="og:title" content="学习笔记之Memcached原理">
 <meta property="og:url" content="http://yoursite.com/2016/11/28/learn-memcached-principle/index.html">
 <meta property="og:site_name" content="茅坡村的程序狗">
-<meta property="og:description" content="title: 学习笔记之Memcached原理date: 2016-11-28 23:33:28tags: 
-
-memcached
-NoSqlcategories: 数据库—## 学习笔记之Memcached原理
-
-0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+<meta property="og:description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
 0x01 Memcached特性
-基于libeve">
-<meta property="og:updated_time" content="2016-11-28T15:39:35.000Z">
+基于libevent的事件处理
+内置内存存储方式SLab Allocation机制
+并不单一的数据删除机制
+基于客户端的分布式系统
+
+0x02 高性能的基础：libevent事件处理
+Libevent 是一个用C语言编写的、轻量级的开">
+<meta property="og:updated_time" content="2016-11-28T15:41:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="茅坡村的程序狗">
-<meta name="twitter:description" content="title: 学习笔记之Memcached原理date: 2016-11-28 23:33:28tags: 
-
-memcached
-NoSqlcategories: 数据库—## 学习笔记之Memcached原理
-
-0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+<meta name="twitter:title" content="学习笔记之Memcached原理">
+<meta name="twitter:description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
 0x01 Memcached特性
-基于libeve">
+基于libevent的事件处理
+内置内存存储方式SLab Allocation机制
+并不单一的数据删除机制
+基于客户端的分布式系统
+
+0x02 高性能的基础：libevent事件处理
+Libevent 是一个用C语言编写的、轻量级的开">
 
 
 
@@ -107,7 +110,7 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
   };
 </script>
 
-  <title>  | 茅坡村的程序狗 </title>
+  <title> 学习笔记之Memcached原理 | 茅坡村的程序狗 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +256,7 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
             
             
               
-                
+                学习笔记之Memcached原理
               
             
           </h1>
@@ -270,6 +273,25 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -288,7 +310,7 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
          
           
           &nbsp; | &nbsp;
-          <span id="/2016/11/28/learn-memcached-principle/"class="leancloud_visitors" data-flag-title="">
+          <span id="/2016/11/28/learn-memcached-principle/"class="leancloud_visitors" data-flag-title="学习笔记之Memcached原理">
              &nbsp;阅读次数
             </span>
           
@@ -306,13 +328,7 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
       
 
       
-        <hr>
-<p>title: 学习笔记之Memcached原理<br>date: 2016-11-28 23:33:28<br>tags: </p>
-<ul>
-<li>memcached</li>
-<li>NoSql<br>categories: 数据库<br>—## 学习笔记之Memcached原理</li>
-</ul>
-<h3 id="0x00-Memcached简述"><a href="#0x00-Memcached简述" class="headerlink" title="0x00 Memcached简述"></a>0x00 Memcached简述</h3><p>Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。</p>
+        <h3 id="0x00-Memcached简述"><a href="#0x00-Memcached简述" class="headerlink" title="0x00 Memcached简述"></a>0x00 Memcached简述</h3><p>Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。</p>
 <h3 id="0x01-Memcached特性"><a href="#0x01-Memcached特性" class="headerlink" title="0x01 Memcached特性"></a>0x01 Memcached特性</h3><ul>
 <li>基于libevent的事件处理</li>
 <li>内置内存存储方式SLab Allocation机制</li>
@@ -355,6 +371,14 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/memcached/" rel="tag">#memcached</a>
+          
+            <a href="/tags/NoSql/" rel="tag">#NoSql</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -393,7 +417,7 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/11/28/learn-memcached-principle/"
-           data-title="" data-url="http://yoursite.com/2016/11/28/learn-memcached-principle/">
+           data-title="学习笔记之Memcached原理" data-url="http://yoursite.com/2016/11/28/learn-memcached-principle/">
       </div>
     
   </div>
@@ -455,7 +479,7 @@ NoSqlcategories: 数据库—## 学习笔记之Memcached原理
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
