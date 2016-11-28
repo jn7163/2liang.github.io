@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Python," />
+  <meta name="keywords" content="memcached,NoSql," />
 
 
 
@@ -59,22 +59,40 @@
 
 
 
-<meta name="description" content="今天，在帮实验室老师进行软件著作权申请，其中有一个流程是将软件源代码进行整理并且打印，所以我们就开始了大规模的手动复制文件内容，粘贴文件内容，因为一个软件的代码也是多如狗，手动得搞到何年何月啊，瞬间就感觉生命失去了光彩，人生瞬间黑暗无比。
+<meta name="description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+0x01 Memcached特性
+基于libevent的事件处理
+内置内存存储方式SLab Allocation机制
+并不单一的数据删除机制
+基于客户端的分布式系统
 
-终于，在复制了三四个文件源代码之后，机智的队友提出咱真就这样手动复制吗？手动复制吗？我们还是程序员吗？还是程序员吗？难道我们现在成了高级打字员了，高级打字员了">
+0x02 高性能的基础：libevent事件处理
+Libevent 是一个用C语言编写的、轻量级的开">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python脚本之批量实现文件内容追加">
-<meta property="og:url" content="http://yoursite.com/2014/11/11/python-file-content-append/index.html">
+<meta property="og:title" content="学习笔记之Memcached原理">
+<meta property="og:url" content="http://yoursite.com/2016/11/28/learn-memcached-principle/index.html">
 <meta property="og:site_name" content="茅坡村的程序狗">
-<meta property="og:description" content="今天，在帮实验室老师进行软件著作权申请，其中有一个流程是将软件源代码进行整理并且打印，所以我们就开始了大规模的手动复制文件内容，粘贴文件内容，因为一个软件的代码也是多如狗，手动得搞到何年何月啊，瞬间就感觉生命失去了光彩，人生瞬间黑暗无比。
+<meta property="og:description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+0x01 Memcached特性
+基于libevent的事件处理
+内置内存存储方式SLab Allocation机制
+并不单一的数据删除机制
+基于客户端的分布式系统
 
-终于，在复制了三四个文件源代码之后，机智的队友提出咱真就这样手动复制吗？手动复制吗？我们还是程序员吗？还是程序员吗？难道我们现在成了高级打字员了，高级打字员了">
-<meta property="og:updated_time" content="2016-11-09T13:44:50.000Z">
+0x02 高性能的基础：libevent事件处理
+Libevent 是一个用C语言编写的、轻量级的开">
+<meta property="og:updated_time" content="2016-11-28T15:37:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python脚本之批量实现文件内容追加">
-<meta name="twitter:description" content="今天，在帮实验室老师进行软件著作权申请，其中有一个流程是将软件源代码进行整理并且打印，所以我们就开始了大规模的手动复制文件内容，粘贴文件内容，因为一个软件的代码也是多如狗，手动得搞到何年何月啊，瞬间就感觉生命失去了光彩，人生瞬间黑暗无比。
+<meta name="twitter:title" content="学习笔记之Memcached原理">
+<meta name="twitter:description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+0x01 Memcached特性
+基于libevent的事件处理
+内置内存存储方式SLab Allocation机制
+并不单一的数据删除机制
+基于客户端的分布式系统
 
-终于，在复制了三四个文件源代码之后，机智的队友提出咱真就这样手动复制吗？手动复制吗？我们还是程序员吗？还是程序员吗？难道我们现在成了高级打字员了，高级打字员了">
+0x02 高性能的基础：libevent事件处理
+Libevent 是一个用C语言编写的、轻量级的开">
 
 
 
@@ -92,7 +110,7 @@
   };
 </script>
 
-  <title> Python脚本之批量实现文件内容追加 | 茅坡村的程序狗 </title>
+  <title> 学习笔记之Memcached原理 | 茅坡村的程序狗 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -238,7 +256,7 @@
             
             
               
-                Python脚本之批量实现文件内容追加
+                学习笔记之Memcached原理
               
             
           </h1>
@@ -250,8 +268,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-11T19:33:28+08:00" content="2014-11-11">
-              2014-11-11
+            <time itemprop="dateCreated" datetime="2016-11-28T23:33:28+08:00" content="2016-11-28">
+              2016-11-28
             </time>
           </span>
 
@@ -264,8 +282,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
                   </a>
                 </span>
 
@@ -280,8 +298,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/11/11/python-file-content-append/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/11/python-file-content-append/" itemprop="commentsCount"></span>
+                <a href="/2016/11/28/learn-memcached-principle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/learn-memcached-principle/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -292,7 +310,7 @@
          
           
           &nbsp; | &nbsp;
-          <span id="/2014/11/11/python-file-content-append/"class="leancloud_visitors" data-flag-title="Python脚本之批量实现文件内容追加">
+          <span id="/2016/11/28/learn-memcached-principle/"class="leancloud_visitors" data-flag-title="学习笔记之Memcached原理">
              &nbsp;阅读次数
             </span>
           
@@ -310,34 +328,37 @@
       
 
       
-        <p><div>今天，在帮实验室老师进行软件著作权申请，其中有一个流程是将软件源代码进行整理并且打印，所以我们就开始了大规模的手动复制文件内容，粘贴文件内容，因为一个软件的代码也是多如狗，手动得搞到何年何月啊，瞬间就感觉生命失去了光彩，人生瞬间黑暗无比。</div></p>
-<p><div></div></p>
-<p><div>终于，在复制了三四个文件源代码之后，机智的队友提出咱真就这样手动复制吗？手动复制吗？我们还是程序员吗？还是程序员吗？难道我们现在成了高级打字员了，高级打字员了？一语惊醒梦中人啊！人才啊，竟然可以发现这个问题，有前途！</div></p>
-<p><div></div></p>
-<p><div>于是 Python脚本之批量实现文件内容追加 随即出炉了，趁着还热乎，就赶紧贴上代码：</div></p>
-<p><div></div></p>
-<p><div></div></p>
-<p><pre class="lang:default decode:true  crayon-selected">#coding:utf-8<br>import os</pre></p>
-<p>#——-代码段一</p>
-<p>#获取当前文件夹<br>filePath = os.getcwd()</p>
-<p>#获取当前文件列表<br>fileNameList = os.listdir(filePath)<br>fileDirList = []</p>
-<p>#获取文件路径列表<br>for fileName in fileNameList:<br>    fileDirList.append(os.path.join(filePath, fileName))</p>
-<p>#——–代码段二<br>f = open(‘code.txt’, ‘w’)<br>f.write(“开始写文件\n”)<br>f.close()<br>for code in fileDirList:<br>    f = open(‘code.txt’, ‘a’)<br>    split = os.path.splitext(code)<br>    if(split[1] == ‘.h’ or split[1] == ‘.cpp’):<br>        fz = open(code, ‘r’)<br>        string = “源代码文件” + code +”代码:\n”<br>        f.write(string)<br>        content = fz.read()<br>        print “文件 %s 读写成功” % code<br>        f.write(content)<br>        fz.close()<br>    f.close()</p>
-<p>print “读写成功”<br>&nbsp;</p>
-<p></p>
-<p><div><a id="more"></a></div></p>
-<p><div>该脚本的使用必须将代码置于你所要进行操作的文件夹。</div></p>
-<p><div>这里，对于代码做一点简单的说明：</div></p>
-<p><div></div></p>
-<p><div>代码段一：</div></p>
-<p><div>这里我们通过使用os模块里面的getcwd()方法获取当前脚本所在文件夹路径，然后我们通过listdir()将该文件夹下所有文件的文件名列出来放在一个列表中去。之后的for循环，我们是通过os.path.join()将文件名与文件路径组合在一起，以方便之后的文件的打开。</div></p>
-<p><div></div></p>
-<p><div>代码段二：</div></p>
-<p><div>我们通过Python的文件操作，以追加方式打开这个文件，之后我们去遍历整个文件夹，因为这里我们只是要cpp以及.h头文件里面的代码，所以通过获取文件的后缀名，判断是否符合，符合我们的条件之后我们将用只读方式打开文件，然后读取文件内容，将文件内容追加到我们之前建的文件即可。</div></p>
-<p><div></div></p>
-<p><div>这里也有个问题，我们不能够自定义哪个文件夹，也不能去遍历文件夹之内的文件夹，这个因为我们没有这方面需求，所以这块没做。</div></p>
-<p><div></div></p>
-<p><div>小菜之作，有不对的地方，还请多多包含，喜欢Python的朋友也可以留言哦！一块交流。。。</div><br>&nbsp;</p>
+        <h4 id="0x00-Memcached简述"><a href="#0x00-Memcached简述" class="headerlink" title="0x00 Memcached简述"></a>0x00 Memcached简述</h4><p>Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。</p>
+<h4 id="0x01-Memcached特性"><a href="#0x01-Memcached特性" class="headerlink" title="0x01 Memcached特性"></a>0x01 Memcached特性</h4><ul>
+<li>基于libevent的事件处理</li>
+<li>内置内存存储方式SLab Allocation机制</li>
+<li>并不单一的数据删除机制</li>
+<li>基于客户端的分布式系统</li>
+</ul>
+<h4 id="0x02-高性能的基础：libevent事件处理"><a href="#0x02-高性能的基础：libevent事件处理" class="headerlink" title="0x02 高性能的基础：libevent事件处理"></a>0x02 高性能的基础：libevent事件处理</h4><blockquote>
+<p>Libevent 是一个用C语言编写的、轻量级的开源高性能网络库，主要有以下几个亮点：事件驱动（ event-driven），高性能;轻量级，专注于网络，不如 ACE 那么臃肿庞大；源代码相当精炼、易读；跨平台，支持 Windows、 Linux、 *BSD 和 Mac Os；支持多种 I/O 多路复用技术， epoll、 poll、 dev/poll、 select 和 kqueue 等；支持 I/O，定时器和信号等事件；注册事件优先级。</p>
+</blockquote>
+<p>以上引自百度百科，在不支持I/O多路复用的情况下，一个线程同时只能处理一个socket文件操作符，所以当一个任务未完成时，线程需要等待任务的处理，这种处理模型效率低下。而I/O多路复用无需等待任务完成，而是将所有任务维护在一个I/O组中，在等待过程中线程可以去处理其他的任务，当某个任务完成后，再去操作该socket操作符。值得一提的是，<strong>在I/O多路复用技术中，epoll是非常棒的</strong>，相比于select模型，<strong>epoll没有文件操作符数量的限制</strong>；并且select模型是将所有操作符维护在一个I/O组中，当有socket数据可操作时，线程需要在组中寻找哪个文件操作符可操作，而<strong>epoll只将可操作的socket文件操作符给线程</strong>，线程无需自己寻找，可以直接操作该socket，提高了处理性能。</p>
+<p>所以，使用libevent时间处理模型，非常好的提升了memcached的性能。</p>
+<h4 id="0x03-SLab-Allocation机制"><a href="#0x03-SLab-Allocation机制" class="headerlink" title="0x03 SLab Allocation机制"></a>0x03 SLab Allocation机制</h4><p>在memcached中，内存不是直接C语言提供的<code>malloc()</code> <code>free()</code> 进行管理的，因为原生的内存管理方式会造成内存碎片，会加重内存管理器的内存管理负担。而SLab Allocation机制完美的解决了内存碎片化的问题。</p>
+<h6 id="a-解决内存碎片化"><a href="#a-解决内存碎片化" class="headerlink" title="a.解决内存碎片化"></a>a.解决内存碎片化</h6><p>SLab Allocator 在初始化时，通过将内存分配成预先设置的大小，将这些内存分割成特定长度的块(chunk)，并把尺寸相同的chunk分成一个组，也就是chunk集合，而这种方式就解决了内存碎片化的问题。</p>
+<h6 id="b-内存预分配"><a href="#b-内存预分配" class="headerlink" title="b.内存预分配"></a>b.内存预分配</h6><p>在需要存储缓存数据时，memcached会在chunk中选择与所存数据大小最接近的chunk，并将数据存储到该chunk中，这样不需要每次在存储数据时，都向操作系统申请空间，提升了memcached的处理性能。</p>
+<h6 id="c-内存重复利用"><a href="#c-内存重复利用" class="headerlink" title="c.内存重复利用"></a>c.内存重复利用</h6><p>当存储的数据过期后，memcached不会释放该数据的所占用的内存，而仅仅是将该数据标记为不可用，当有新数据需要存储时，memcached会将数据重新存储到该空间中，用这种方式对内存进行重复利用。</p>
+<h6 id="d-缺点"><a href="#d-缺点" class="headerlink" title="d.缺点"></a>d.缺点</h6><p>因为Slab Allocator将内存分割成固定大小的块，当存储的数据小于chunk的长度，会导致该chunk剩余空间的浪费。例如：当一个数据占用60K，而最接近的chunk长度为64K，此时就有4K的空间造成浪费。而目前仅有的调优方案是调整Growth Factor因子，让chunk的大小尽可能的接近，减少空间的浪费。</p>
+<h5 id="0x04-memached的删除机制"><a href="#0x04-memached的删除机制" class="headerlink" title="0x04 memached的删除机制"></a>0x04 memached的删除机制</h5><h6 id="a-不会真正删除记录"><a href="#a-不会真正删除记录" class="headerlink" title="a.不会真正删除记录"></a>a.不会真正删除记录</h6><p>当存储在memcached中的记录过期时，memcached不会释放该内存，而是让客户端对该记录不可见。留下内存来，让之后的存储记录进行内存重复利用。</p>
+<h6 id="b-Lazy-Expiration-懒过期机制"><a href="#b-Lazy-Expiration-懒过期机制" class="headerlink" title="b.Lazy Expiration(懒过期机制)"></a>b.Lazy Expiration(懒过期机制)</h6><p>memcached为了提升性能，在内部不会对存储在memcached中的记录进行监视，而是在每次get数据的时候，对该记录的过期时间进行校验，当记录过期，则不返回数据。</p>
+<h6 id="c-LRU-最近最少使用"><a href="#c-LRU-最近最少使用" class="headerlink" title="c.LRU(最近最少使用)"></a>c.LRU(最近最少使用)</h6><p>虽然memcached拥有内存重复利用的机制，但是进行大量数据缓存时，还是会出现内存吃满，memcached无法在SLab中获取到空闲的内存，在这种情况下，memcached会触发LRU，会在最近未被使用的记录中进行搜索，并将这些空间分配给新的记录。</p>
+<h5 id="0x05-memcached的分布式"><a href="#0x05-memcached的分布式" class="headerlink" title="0x05 memcached的分布式"></a>0x05 memcached的分布式</h5><p>不同于其他软件的分布式，memcached的分布式不存在于服务端，而是完全由客户端进行分布式的处理。这样的好处是，减少memcached服务端之间的网络连接，当某一个服务器宕机时，不至于影响其他机器的正常使用。</p>
+<h6 id="a-根据余数计算分散"><a href="#a-根据余数计算分散" class="headerlink" title="a.根据余数计算分散"></a>a.根据余数计算分散</h6><p>通过<code>crc32()</code>计算出键的整数哈希值，然后除以服务器的台数，求得余数进行服务器节点的选择，此种方式的优点是，简单易操作，并且数据的分散性也非常优秀。但缺点是，当改变服务器的数量时，缓存重组的代价巨大，在此过程中缓存的命中率急剧下降。</p>
+<h6 id="b-Consistent-Hashing-一致性哈希"><a href="#b-Consistent-Hashing-一致性哈希" class="headerlink" title="b.Consistent Hashing(一致性哈希)"></a>b.Consistent Hashing(一致性哈希)</h6><p>首先求出memcached服务器节点的哈希值，并将其分配到一个0~2^32的圆上，我们称该这个圆为值域，之后通过同样的计算方式求出键的哈希值，并将值映射到圆上，然后从数据映射到的位置开始顺时针寻找，并将数据存储到找到的第一个服务器节点上，如果找到2^32仍然找不到就将数据存储到第一台memcached机器上。</p>
+<p>当添加一台新机器时，通过同样的hash算法将该机器映射到圆上，影响的仅仅是新机器的节点到它的上一个节点之间的数据。</p>
+<p>当删除一台机器时，同样也仅仅影响映射到删除的机器和它的上一台机器之间的数据，而不会造成大面积的缓存重组即rehash.</p>
+<h5 id="0x06-扩展阅读"><a href="#0x06-扩展阅读" class="headerlink" title="0x06 扩展阅读"></a>0x06 扩展阅读</h5><p><a href="http://kb.cnblogs.com/page/42731/" target="_blank" rel="external">memcached完全剖析</a></p>
+<p><a href="http://www.ibm.com/developerworks/cn/aix/library/au-libev/" target="_blank" rel="external">使用 libevent 和 libev 提高网络应用性能</a></p>
+<p><a href="http://www.cnblogs.com/fanzhidongyzby/p/4098546.html" target="_blank" rel="external">高性能IO模型浅析</a></p>
+<blockquote>
+<p>原文作者：<a href="http://blog.2liang.me" target="_blank" rel="external">我才是二亮</a><br>原文链接：<a href="http://blog.2liang.me/2016/11/28/learn-memcached-principle/" target="_blank" rel="external">http://blog.2liang.me/2016/11/28/learn-memcached-principle/</a><br>转载请在正文中标注并保留原文链接、作者等信息。</p>
+</blockquote>
 
       
     </div>
@@ -352,7 +373,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag">#Python</a>
+            <a href="/tags/memcached/" rel="tag">#memcached</a>
+          
+            <a href="/tags/NoSql/" rel="tag">#NoSql</a>
           
         </div>
       
@@ -361,17 +384,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/11/06/js-tooltip/" rel="next" title="使用JS实现Tooltip效果">
-                <i class="fa fa-chevron-left"></i> 使用JS实现Tooltip效果
+              <a href="/2016/09/25/mysql-partition/" rel="next" title="学习笔记之MySQL分区">
+                <i class="fa fa-chevron-left"></i> 学习笔记之MySQL分区
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/03/04/ty-sql-read-note/" rel="prev" title="《SQL必知必会》读书笔记">
-                《SQL必知必会》读书笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -397,8 +416,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2014/11/11/python-file-content-append/"
-           data-title="Python脚本之批量实现文件内容追加" data-url="http://yoursite.com/2014/11/11/python-file-content-append/">
+      <div class="ds-thread" data-thread-key="2016/11/28/learn-memcached-principle/"
+           data-title="学习笔记之Memcached原理" data-url="http://yoursite.com/2016/11/28/learn-memcached-principle/">
       </div>
     
   </div>
@@ -558,7 +577,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x00-Memcached简述"><span class="nav-number">1.</span> <span class="nav-text">0x00 Memcached简述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-Memcached特性"><span class="nav-number">2.</span> <span class="nav-text">0x01 Memcached特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x02-高性能的基础：libevent事件处理"><span class="nav-number">3.</span> <span class="nav-text">0x02 高性能的基础：libevent事件处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x03-SLab-Allocation机制"><span class="nav-number">4.</span> <span class="nav-text">0x03 SLab Allocation机制</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#a-解决内存碎片化"><span class="nav-number">4.0.1.</span> <span class="nav-text">a.解决内存碎片化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#b-内存预分配"><span class="nav-number">4.0.2.</span> <span class="nav-text">b.内存预分配</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#c-内存重复利用"><span class="nav-number">4.0.3.</span> <span class="nav-text">c.内存重复利用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#d-缺点"><span class="nav-number">4.0.4.</span> <span class="nav-text">d.缺点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#0x04-memached的删除机制"><span class="nav-number">4.1.</span> <span class="nav-text">0x04 memached的删除机制</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#a-不会真正删除记录"><span class="nav-number">4.1.1.</span> <span class="nav-text">a.不会真正删除记录</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#b-Lazy-Expiration-懒过期机制"><span class="nav-number">4.1.2.</span> <span class="nav-text">b.Lazy Expiration(懒过期机制)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#c-LRU-最近最少使用"><span class="nav-number">4.1.3.</span> <span class="nav-text">c.LRU(最近最少使用)</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#0x05-memcached的分布式"><span class="nav-number">4.2.</span> <span class="nav-text">0x05 memcached的分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#a-根据余数计算分散"><span class="nav-number">4.2.1.</span> <span class="nav-text">a.根据余数计算分散</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#b-Consistent-Hashing-一致性哈希"><span class="nav-number">4.2.2.</span> <span class="nav-text">b.Consistent Hashing(一致性哈希)</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#0x06-扩展阅读"><span class="nav-number">4.3.</span> <span class="nav-text">0x06 扩展阅读</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
