@@ -59,7 +59,7 @@
 
 
 
-<meta name="description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+<meta name="description" content="学习笔记之Memcached原理0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
 0x01 Memcached特性
 基于libevent的事件处理
 内置内存存储方式SLab Allocation机制
@@ -67,12 +67,12 @@
 基于客户端的分布式系统
 
 0x02 高性能的基础：libevent事件处理
-Libevent 是一个用C语言编写的、轻量级的开">
+Libevent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习笔记之Memcached原理">
 <meta property="og:url" content="http://yoursite.com/2016/11/28/learn-memcached-principle/index.html">
 <meta property="og:site_name" content="茅坡村的程序狗">
-<meta property="og:description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+<meta property="og:description" content="学习笔记之Memcached原理0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
 0x01 Memcached特性
 基于libevent的事件处理
 内置内存存储方式SLab Allocation机制
@@ -80,11 +80,15 @@ Libevent 是一个用C语言编写的、轻量级的开">
 基于客户端的分布式系统
 
 0x02 高性能的基础：libevent事件处理
-Libevent 是一个用C语言编写的、轻量级的开">
-<meta property="og:updated_time" content="2016-11-28T15:41:24.000Z">
+Libevent">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/142/706/1427060510-583c4d71d0ce6_articlex">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/189/469/1894696207-583c4dca81f30_articlex">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/376/259/3762593348-54471871a4d2e_articlex">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/378/761/378761449-583c4daae8e01_articlex">
+<meta property="og:updated_time" content="2016-11-28T15:46:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习笔记之Memcached原理">
-<meta name="twitter:description" content="0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
+<meta name="twitter:description" content="学习笔记之Memcached原理0x00 Memcached简述Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。
 0x01 Memcached特性
 基于libevent的事件处理
 内置内存存储方式SLab Allocation机制
@@ -92,7 +96,8 @@ Libevent 是一个用C语言编写的、轻量级的开">
 基于客户端的分布式系统
 
 0x02 高性能的基础：libevent事件处理
-Libevent 是一个用C语言编写的、轻量级的开">
+Libevent">
+<meta name="twitter:image" content="https://sfault-image.b0.upaiyun.com/142/706/1427060510-583c4d71d0ce6_articlex">
 
 
 
@@ -328,7 +333,7 @@ Libevent 是一个用C语言编写的、轻量级的开">
       
 
       
-        <h3 id="0x00-Memcached简述"><a href="#0x00-Memcached简述" class="headerlink" title="0x00 Memcached简述"></a>0x00 Memcached简述</h3><p>Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。</p>
+        <h2 id="学习笔记之Memcached原理"><a href="#学习笔记之Memcached原理" class="headerlink" title="学习笔记之Memcached原理"></a>学习笔记之Memcached原理</h2><h3 id="0x00-Memcached简述"><a href="#0x00-Memcached简述" class="headerlink" title="0x00 Memcached简述"></a>0x00 Memcached简述</h3><p>Memcached是一套高性能的分布式内存对象缓存系统，用于在动态系统中减少数据库负载，提升性能。</p>
 <h3 id="0x01-Memcached特性"><a href="#0x01-Memcached特性" class="headerlink" title="0x01 Memcached特性"></a>0x01 Memcached特性</h3><ul>
 <li>基于libevent的事件处理</li>
 <li>内置内存存储方式SLab Allocation机制</li>
@@ -341,6 +346,7 @@ Libevent 是一个用C语言编写的、轻量级的开">
 <p>以上引自百度百科，在不支持I/O多路复用的情况下，一个线程同时只能处理一个socket文件操作符，所以当一个任务未完成时，线程需要等待任务的处理，这种处理模型效率低下。而I/O多路复用无需等待任务完成，而是将所有任务维护在一个I/O组中，在等待过程中线程可以去处理其他的任务，当某个任务完成后，再去操作该socket操作符。值得一提的是，<strong>在I/O多路复用技术中，epoll是非常棒的</strong>，相比于select模型，<strong>epoll没有文件操作符数量的限制</strong>；并且select模型是将所有操作符维护在一个I/O组中，当有socket数据可操作时，线程需要在组中寻找哪个文件操作符可操作，而<strong>epoll只将可操作的socket文件操作符给线程</strong>，线程无需自己寻找，可以直接操作该socket，提高了处理性能。</p>
 <p>所以，使用libevent时间处理模型，非常好的提升了memcached的性能。</p>
 <h3 id="0x03-SLab-Allocation机制"><a href="#0x03-SLab-Allocation机制" class="headerlink" title="0x03 SLab Allocation机制"></a>0x03 SLab Allocation机制</h3><p>在memcached中，内存不是直接C语言提供的<code>malloc()</code> <code>free()</code> 进行管理的，因为原生的内存管理方式会造成内存碎片，会加重内存管理器的内存管理负担。而SLab Allocation机制完美的解决了内存碎片化的问题。</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/142/706/1427060510-583c4d71d0ce6_articlex" alt="SLab机制"></p>
 <h5 id="a-解决内存碎片化"><a href="#a-解决内存碎片化" class="headerlink" title="a.解决内存碎片化"></a>a.解决内存碎片化</h5><p>SLab Allocator 在初始化时，通过将内存分配成预先设置的大小，将这些内存分割成特定长度的块(chunk)，并把尺寸相同的chunk分成一个组，也就是chunk集合，而这种方式就解决了内存碎片化的问题。</p>
 <h5 id="b-内存预分配"><a href="#b-内存预分配" class="headerlink" title="b.内存预分配"></a>b.内存预分配</h5><p>在需要存储缓存数据时，memcached会在chunk中选择与所存数据大小最接近的chunk，并将数据存储到该chunk中，这样不需要每次在存储数据时，都向操作系统申请空间，提升了memcached的处理性能。</p>
 <h5 id="c-内存重复利用"><a href="#c-内存重复利用" class="headerlink" title="c.内存重复利用"></a>c.内存重复利用</h5><p>当存储的数据过期后，memcached不会释放该数据的所占用的内存，而仅仅是将该数据标记为不可用，当有新数据需要存储时，memcached会将数据重新存储到该空间中，用这种方式对内存进行重复利用。</p>
@@ -349,9 +355,12 @@ Libevent 是一个用C语言编写的、轻量级的开">
 <h5 id="b-Lazy-Expiration-懒过期机制"><a href="#b-Lazy-Expiration-懒过期机制" class="headerlink" title="b.Lazy Expiration(懒过期机制)"></a>b.Lazy Expiration(懒过期机制)</h5><p>memcached为了提升性能，在内部不会对存储在memcached中的记录进行监视，而是在每次get数据的时候，对该记录的过期时间进行校验，当记录过期，则不返回数据。</p>
 <h5 id="c-LRU-最近最少使用"><a href="#c-LRU-最近最少使用" class="headerlink" title="c.LRU(最近最少使用)"></a>c.LRU(最近最少使用)</h5><p>虽然memcached拥有内存重复利用的机制，但是进行大量数据缓存时，还是会出现内存吃满，memcached无法在SLab中获取到空闲的内存，在这种情况下，memcached会触发LRU，会在最近未被使用的记录中进行搜索，并将这些空间分配给新的记录。</p>
 <h4 id="0x05-memcached的分布式"><a href="#0x05-memcached的分布式" class="headerlink" title="0x05 memcached的分布式"></a>0x05 memcached的分布式</h4><p>不同于其他软件的分布式，memcached的分布式不存在于服务端，而是完全由客户端进行分布式的处理。这样的好处是，减少memcached服务端之间的网络连接，当某一个服务器宕机时，不至于影响其他机器的正常使用。</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/189/469/1894696207-583c4dca81f30_articlex" alt="memcached的分布式"></p>
 <h5 id="a-根据余数计算分散"><a href="#a-根据余数计算分散" class="headerlink" title="a.根据余数计算分散"></a>a.根据余数计算分散</h5><p>通过<code>crc32()</code>计算出键的整数哈希值，然后除以服务器的台数，求得余数进行服务器节点的选择，此种方式的优点是，简单易操作，并且数据的分散性也非常优秀。但缺点是，当改变服务器的数量时，缓存重组的代价巨大，在此过程中缓存的命中率急剧下降。</p>
 <h5 id="b-Consistent-Hashing-一致性哈希"><a href="#b-Consistent-Hashing-一致性哈希" class="headerlink" title="b.Consistent Hashing(一致性哈希)"></a>b.Consistent Hashing(一致性哈希)</h5><p>首先求出memcached服务器节点的哈希值，并将其分配到一个0~2^32的圆上，我们称该这个圆为值域，之后通过同样的计算方式求出键的哈希值，并将值映射到圆上，然后从数据映射到的位置开始顺时针寻找，并将数据存储到找到的第一个服务器节点上，如果找到2^32仍然找不到就将数据存储到第一台memcached机器上。</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/376/259/3762593348-54471871a4d2e_articlex" alt="Consistent Hashing"></p>
 <p>当添加一台新机器时，通过同样的hash算法将该机器映射到圆上，影响的仅仅是新机器的节点到它的上一个节点之间的数据。</p>
+<p><img src="https://sfault-image.b0.upaiyun.com/378/761/378761449-583c4daae8e01_articlex" alt="Consistent Hashing添加节点"></p>
 <p>当删除一台机器时，同样也仅仅影响映射到删除的机器和它的上一台机器之间的数据，而不会造成大面积的缓存重组即rehash.</p>
 <h4 id="0x06-扩展阅读"><a href="#0x06-扩展阅读" class="headerlink" title="0x06 扩展阅读"></a>0x06 扩展阅读</h4><p><a href="http://kb.cnblogs.com/page/42731/" target="_blank" rel="external">memcached完全剖析</a></p>
 <p><a href="http://www.ibm.com/developerworks/cn/aix/library/au-libev/" target="_blank" rel="external">使用 libevent 和 libev 提高网络应用性能</a></p>
@@ -577,7 +586,7 @@ Libevent 是一个用C语言编写的、轻量级的开">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-Memcached简述"><span class="nav-number">1.</span> <span class="nav-text">0x00 Memcached简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-Memcached特性"><span class="nav-number">2.</span> <span class="nav-text">0x01 Memcached特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-高性能的基础：libevent事件处理"><span class="nav-number">3.</span> <span class="nav-text">0x02 高性能的基础：libevent事件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-SLab-Allocation机制"><span class="nav-number">4.</span> <span class="nav-text">0x03 SLab Allocation机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-解决内存碎片化"><span class="nav-number">4.0.1.</span> <span class="nav-text">a.解决内存碎片化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-内存预分配"><span class="nav-number">4.0.2.</span> <span class="nav-text">b.内存预分配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-内存重复利用"><span class="nav-number">4.0.3.</span> <span class="nav-text">c.内存重复利用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#d-缺点"><span class="nav-number">4.0.4.</span> <span class="nav-text">d.缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x04-memached的删除机制"><span class="nav-number">4.1.</span> <span class="nav-text">0x04 memached的删除机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-不会真正删除记录"><span class="nav-number">4.1.1.</span> <span class="nav-text">a.不会真正删除记录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-Lazy-Expiration-懒过期机制"><span class="nav-number">4.1.2.</span> <span class="nav-text">b.Lazy Expiration(懒过期机制)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-LRU-最近最少使用"><span class="nav-number">4.1.3.</span> <span class="nav-text">c.LRU(最近最少使用)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x05-memcached的分布式"><span class="nav-number">4.2.</span> <span class="nav-text">0x05 memcached的分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-根据余数计算分散"><span class="nav-number">4.2.1.</span> <span class="nav-text">a.根据余数计算分散</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-Consistent-Hashing-一致性哈希"><span class="nav-number">4.2.2.</span> <span class="nav-text">b.Consistent Hashing(一致性哈希)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x06-扩展阅读"><span class="nav-number">4.3.</span> <span class="nav-text">0x06 扩展阅读</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习笔记之Memcached原理"><span class="nav-number">1.</span> <span class="nav-text">学习笔记之Memcached原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-Memcached简述"><span class="nav-number">1.1.</span> <span class="nav-text">0x00 Memcached简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-Memcached特性"><span class="nav-number">1.2.</span> <span class="nav-text">0x01 Memcached特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-高性能的基础：libevent事件处理"><span class="nav-number">1.3.</span> <span class="nav-text">0x02 高性能的基础：libevent事件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-SLab-Allocation机制"><span class="nav-number">1.4.</span> <span class="nav-text">0x03 SLab Allocation机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-解决内存碎片化"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">a.解决内存碎片化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-内存预分配"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">b.内存预分配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-内存重复利用"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">c.内存重复利用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#d-缺点"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">d.缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x04-memached的删除机制"><span class="nav-number">1.4.1.</span> <span class="nav-text">0x04 memached的删除机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-不会真正删除记录"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">a.不会真正删除记录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-Lazy-Expiration-懒过期机制"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">b.Lazy Expiration(懒过期机制)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-LRU-最近最少使用"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">c.LRU(最近最少使用)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x05-memcached的分布式"><span class="nav-number">1.4.2.</span> <span class="nav-text">0x05 memcached的分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-根据余数计算分散"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">a.根据余数计算分散</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-Consistent-Hashing-一致性哈希"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">b.Consistent Hashing(一致性哈希)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x06-扩展阅读"><span class="nav-number">1.4.3.</span> <span class="nav-text">0x06 扩展阅读</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
